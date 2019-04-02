@@ -15,9 +15,9 @@ public class InstantiateGraph : MonoBehaviour {
 // Use this for initialization
 	void Start ()
 	{
-		c = GameObject.FindGameObjectWithTag("Controller");
-    	pointer = c.GetComponent<VRTK_Pointer>();
-    	Debug.Log("Surface plot instantiated");
+		// c = GameObject.FindGameObjectWithTag("Controller");
+  //   	pointer = c.GetComponent<VRTK_Pointer>();
+  //   	Debug.Log("Surface plot instantiated");
 	}
 
 
@@ -28,8 +28,8 @@ public class InstantiateGraph : MonoBehaviour {
             ray cast control
         **************************************************/
         
-        RaycastHit hit = pointer.pointerRenderer.GetDestinationHit();
-        Debug.Log(hit.point);
+        // RaycastHit hit = pointer.pointerRenderer.GetDestinationHit();
+        // Debug.Log(hit.point);
         // if (Input.GetMouseButtonDown(0))
         // {
         //     RaycastHit hit = pointer.pointerRenderer.GetDestinationHit();

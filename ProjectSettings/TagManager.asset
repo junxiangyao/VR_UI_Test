@@ -6,8 +6,11 @@ TagManager:
   tags:
   - ExcludeTeleport
   - 'Destination '
-  - Controller
   - UI
+  - ControllerLeft
+  - ControllerRight
+  - MiniMap
+  - Teleport
   layers:
   - Default
   - TransparentFX
