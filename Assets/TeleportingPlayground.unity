@@ -2487,7 +2487,6 @@ GameObject:
   - component: {fileID: 266640564}
   - component: {fileID: 266640563}
   - component: {fileID: 266640567}
-  - component: {fileID: 266640568}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: MiniMap
@@ -2579,43 +2578,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 266640562}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40b04477af4f21d47a37b3385de92a8f, type: 3}
+  m_Script: {fileID: 11500000, guid: a285b79ba49d0a942bb7ef649e21dc28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &266640568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266640562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7540575af55528e45a58556fc246738f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disableWhenIdle: 1
-  allowedNearTouchControllers: 0
-  allowedTouchControllers: 0
-  ignoredColliders: []
-  isGrabbable: 0
-  holdButtonToGrab: 1
-  stayGrabbedOnTeleport: 1
-  validDrop: 1
-  grabOverrideButton: 0
-  allowedGrabControllers: 0
-  grabAttachMechanicScript: {fileID: 0}
-  secondaryGrabActionScript: {fileID: 0}
-  isUsable: 0
-  holdButtonToUse: 1
-  useOnlyIfGrabbed: 0
-  pointerActivatesUseAction: 0
-  useOverrideButton: 0
-  allowedUseControllers: 0
-  objectHighlighter: {fileID: 0}
-  touchHighlightColor: {r: 0, g: 0, b: 0, a: 0}
-  usingState: 0
-  shape: 0
 --- !u!1 &273785336
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-﻿// Ignore Interact Touch Colliders|Interactables|35060
+// Ignore Interact Touch Colliders|Interactables|35060
 namespace VRTK
 {
     using UnityEngine;

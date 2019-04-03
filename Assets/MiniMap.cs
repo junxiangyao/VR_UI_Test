@@ -20,8 +20,8 @@ public class MiniMap : MonoBehaviour
 
 	
 	VRTK_BasicTeleport teleporter;
-	Vector3 marker_Position;
-	GameObject transform_buffer;
+	GameObject hit_point;
+	GameObject h;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +40,10 @@ public class MiniMap : MonoBehaviour
         transform.SetParent(left_controller.transform);
         transform.localPosition = new Vector3(0,0.02f,0);
        	player_marker.transform.SetParent(transform);
-        transform_buffer = new GameObject();
+
+        hit_point = new GameObject();
+        h = new GameObject();
+        // hit_point.transform.SetParent(transform);
 
 
     }
@@ -65,8 +68,8 @@ public class MiniMap : MonoBehaviour
     	// 	left_controller.transform.position.y,
     	// 	left_controller.transform.position.z);
     	// player_marker.transform.rotation = transform.rotation;
-    	Debug.Log(player_marker);
-    	Debug.Log(player_world.transform.position);
+    	// Debug.Log(player_marker);
+    	// Debug.Log(player_world.transform.position);
     	// Debug.Log(right_controller.GetComponent<VRTK_ControllerEvents>().triggerTouched);
 
  		if (left_controller.GetComponent<VRTK_ControllerEvents>().gripPressed)
@@ -82,25 +85,29 @@ public class MiniMap : MonoBehaviour
         if (right_controller.GetComponent<VRTK_ControllerEvents>().triggerTouched)
         {
         	RaycastHit hit = pointer.pointerRenderer.GetDestinationHit();
-        	Debug.Log(hit.point);
+
+        	// Debug.Log(hit.point);
             if (right_controller.GetComponent<VRTK_ControllerEvents>().triggerPressed)
             {
             	if(hit.transform.gameObject.CompareTag("MiniMap"))
             	{
-            		dist_mini = Vector3.Distance(transform.localPosition, hit.point);
-            		if(dist_mini <= 0.3f)
+            		h.transform.position = hit.point;
+            		hit_point.transform.position = left_controller.transform.worldToLocalMatrix.MultiplyPoint3x4(hit.point);
+                    hit_point.transform.position = Quaternion.Euler(0, -yRotation, 0) * hit_point.transform.position;
+                    // hit_point.transform.position = left_controller.transform.InverseTransformPoint(hit.point);
+            		dist_mini = Vector3.Distance(new Vector3(0,0,0), hit_point.transform.position);
+            							// hit_point.transform.rotation = player_world.transform.rotation;
+            		// hit_point.transform.rotation = transform.rotation;
+            		// Debug.Log("!!!!!!x"+ hit_point.transform.position.x * 100);
+            		// Debug.Log("!!!!!!y"+ hit_point.transform.position.y * 100);
+            		// Debug.Log("!!!!!!z"+ hit_point.transform.position.z * 100);
+
+            		Debug.Log("!!!!!!"+dist_mini);
+
+
+            		if(dist_mini <= 0.15f)
             		{
-            			angle_sin = hit.point.x - transform.localPosition.x;
-            			angle_cos = hit.point.z - transform.localPosition.z;
-            			// hit.point.InverseTransformPoint(transform.position)
-            			transform_buffer.transform.position = hit.point;
-            			
-            			// teleporter.ForceTeleport(transform_buffer.transform.InverseTransformPoint(transform.localPosition), Quaternion.Euler(0, 0, 0));
-            			// teleporter.ForceTeleport(
-            			// new Vector3(Mathf.Sin(angle_sin * 3.1415926535f / 180f) * dist_mini * 100,
-            			// 0f,
-            			// Mathf.Cos(angle_cos  * 3.1415926535f / 180f) * dist_mini * 100), Quaternion.Euler(0, 0, 0));
-            			// teleporter.ForceTeleport(new Vector3(0,0,0),Quaternion.Euler(new Vector3(0, 0, 0)));
+            			teleporter.ForceTeleport(new Vector3(hit_point.transform.position.x * 333, 0, hit_point.transform.position.z * 333),Quaternion.Euler(new Vector3(0, 0, 0)));
             		}
             	}
             	
