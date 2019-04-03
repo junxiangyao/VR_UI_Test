@@ -9,7 +9,8 @@ public class MiniMap : MonoBehaviour
 	GameObject left_controller;
 	GameObject right_controller;
 	GameObject play_area;
-
+	GameObject player_marker;
+	GameObject player_world;
 	float rotation_counter;
 	float yRotation = 0.0f;
 	float dist_mini = 0.0f;
@@ -19,6 +20,8 @@ public class MiniMap : MonoBehaviour
 
 	
 	VRTK_BasicTeleport teleporter;
+	Vector3 marker_Position;
+	GameObject transform_buffer;
 
     // Start is called before the first frame update
     void Start()
@@ -27,23 +30,53 @@ public class MiniMap : MonoBehaviour
 		left_controller = GameObject.FindGameObjectWithTag("ControllerLeft");
     	pointer = right_controller.GetComponent<VRTK_Pointer>();
     	play_area = GameObject.FindGameObjectWithTag("Teleport");
+    	player_world = GameObject.Find("[VRTK_SDKSetups]").transform.GetChild(3).GetChild(0).gameObject;
         teleporter = play_area.GetComponent<VRTK_BasicTeleport>(); 
+
+        player_marker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+
+        // cube.transform.localScale = new Vector3(0.03f,0.03f,0.03f);
+        player_marker.transform.localScale = new Vector3(0.01f,0.1f,0.01f);
+        transform.SetParent(left_controller.transform);
+        transform.localPosition = new Vector3(0,0.02f,0);
+       	player_marker.transform.SetParent(transform);
+        transform_buffer = new GameObject();
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-    	transform.localPosition = new Vector3(left_controller.transform.position.x,
-    		left_controller.transform.position.y,
-    		left_controller.transform.position.z);
-    	            			Debug.Log(teleporter);
+    	// marker_position is the value of a world
+    	// marker_Position = transform.TransformPoint(player_world.transform.position.x/100f,
+    	// 	0f,
+    	// 	player_world.transform.position.z/100f);
+
+    	// player_marker.transform.localPosition = marker_Position;
+
+    	player_marker.transform.localPosition = new Vector3(player_world.transform.position.x/100f,
+    		5f,
+    		player_world.transform.position.z/100f);
+
+
+
+    	// transform.localPosition = new Vector3(left_controller.transform.position.x,
+    	// 	left_controller.transform.position.y,
+    	// 	left_controller.transform.position.z);
+    	// player_marker.transform.rotation = transform.rotation;
+    	Debug.Log(player_marker);
+    	Debug.Log(player_world.transform.position);
     	// Debug.Log(right_controller.GetComponent<VRTK_ControllerEvents>().triggerTouched);
 
  		if (left_controller.GetComponent<VRTK_ControllerEvents>().gripPressed)
         {
         	yRotation += 5.0f;
-        	transform.eulerAngles = new Vector3(0, yRotation, 0);
+        	// transform.eulerAngles = new Vector3(0, yRotation, 0);
+        	transform.localRotation = Quaternion.Euler(0, yRotation, 0);
         }
+
+
 
 
         if (right_controller.GetComponent<VRTK_ControllerEvents>().triggerTouched)
@@ -59,14 +92,15 @@ public class MiniMap : MonoBehaviour
             		{
             			angle_sin = hit.point.x - transform.localPosition.x;
             			angle_cos = hit.point.z - transform.localPosition.z;
+            			// hit.point.InverseTransformPoint(transform.position)
+            			transform_buffer.transform.position = hit.point;
             			
-
-
+            			// teleporter.ForceTeleport(transform_buffer.transform.InverseTransformPoint(transform.localPosition), Quaternion.Euler(0, 0, 0));
             			// teleporter.ForceTeleport(
             			// new Vector3(Mathf.Sin(angle_sin * 3.1415926535f / 180f) * dist_mini * 100,
             			// 0f,
             			// Mathf.Cos(angle_cos  * 3.1415926535f / 180f) * dist_mini * 100), Quaternion.Euler(0, 0, 0));
-            			teleporter.ForceTeleport(new Vector3(0,0,0),Quaternion.Euler(new Vector3(0, 0, 0)));
+            			// teleporter.ForceTeleport(new Vector3(0,0,0),Quaternion.Euler(new Vector3(0, 0, 0)));
             		}
             	}
             	
