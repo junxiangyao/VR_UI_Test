@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using VRTK;
+using UnityEngine.UI;
+
 
 public class MiniMap : MonoBehaviour
 {
@@ -17,11 +19,14 @@ public class MiniMap : MonoBehaviour
 	float angle_sin = 0.0f;
 	float angle_cos = 0.0f;
 	float dist_real = 0.0f;
-
 	
 	VRTK_BasicTeleport teleporter;
 	GameObject hit_point;
-	GameObject h;
+
+    GameObject c;
+    Button b;
+    bool boolean = true;
+    ColorBlock theColor;
 
     // Start is called before the first frame update
     void Start()
@@ -42,15 +47,30 @@ public class MiniMap : MonoBehaviour
        	player_marker.transform.SetParent(transform);
 
         hit_point = new GameObject();
-        h = new GameObject();
-        // hit_point.transform.SetParent(transform);
-
-
+        c = GameObject.Find("Canvas");
+        c.transform.SetParent(left_controller.transform);
+        b = c.transform.GetChild(1).gameObject.GetComponent<Button>();
+        b.onClick.AddListener(CustomButton_onClick);
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(b);
+        
+        player_marker.SetActive(boolean);
+
+        theColor = b.colors;
+        if(boolean){
+            theColor.normalColor = Color.green;
+            // theColor.highlightedColor = Color.yellow;
+            // theColor.pressedColor = Color.blue;
+        }else{
+            theColor.normalColor = Color.red;
+            // theColor.highlightedColor = Color.yellow;
+            // theColor.pressedColor = Color.blue;
+        };
+        b.colors = theColor;
     	// marker_position is the value of a world
     	// marker_Position = transform.TransformPoint(player_world.transform.position.x/100f,
     	// 	0f,
@@ -58,19 +78,10 @@ public class MiniMap : MonoBehaviour
 
     	// player_marker.transform.localPosition = marker_Position;
 
+
     	player_marker.transform.localPosition = new Vector3(player_world.transform.position.x/100f,
     		5f,
     		player_world.transform.position.z/100f);
-
-
-
-    	// transform.localPosition = new Vector3(left_controller.transform.position.x,
-    	// 	left_controller.transform.position.y,
-    	// 	left_controller.transform.position.z);
-    	// player_marker.transform.rotation = transform.rotation;
-    	// Debug.Log(player_marker);
-    	// Debug.Log(player_world.transform.position);
-    	// Debug.Log(right_controller.GetComponent<VRTK_ControllerEvents>().triggerTouched);
 
  		if (left_controller.GetComponent<VRTK_ControllerEvents>().gripPressed)
         {
@@ -91,16 +102,12 @@ public class MiniMap : MonoBehaviour
             {
             	if(hit.transform.gameObject.CompareTag("MiniMap"))
             	{
-            		h.transform.position = hit.point;
             		hit_point.transform.position = left_controller.transform.worldToLocalMatrix.MultiplyPoint3x4(hit.point);
+                     // hit_point.transform.position = left_controller.transform.InverseTransformPoint(hit.point);
                     hit_point.transform.position = Quaternion.Euler(0, -yRotation, 0) * hit_point.transform.position;
-                    // hit_point.transform.position = left_controller.transform.InverseTransformPoint(hit.point);
+                   
             		dist_mini = Vector3.Distance(new Vector3(0,0,0), hit_point.transform.position);
             							// hit_point.transform.rotation = player_world.transform.rotation;
-            		// hit_point.transform.rotation = transform.rotation;
-            		// Debug.Log("!!!!!!x"+ hit_point.transform.position.x * 100);
-            		// Debug.Log("!!!!!!y"+ hit_point.transform.position.y * 100);
-            		// Debug.Log("!!!!!!z"+ hit_point.transform.position.z * 100);
 
             		Debug.Log("!!!!!!"+dist_mini);
 
@@ -111,13 +118,12 @@ public class MiniMap : MonoBehaviour
             		}
             	}
             	
-            //     if (hit.collider != null)
-            //     {
-            //         Debug.Log("Hit!");
-            //         hit.transform.gameObject.GetComponent<Renderer>().material.color = new Color(Random.Range(0f,1f), Random.Range(0f,1f), Random.Range(0f,1f));
-
-            	// }
             }
         }
+    }
+
+    void CustomButton_onClick()
+    {
+        boolean = ! boolean;
     }
 }

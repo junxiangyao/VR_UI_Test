@@ -53,8 +53,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\_MiniMap.cs" />
      <Compile Include="Assets\ButtonTest.cs" />
+     <Compile Include="Assets\CanvasPanel.cs" />
      <Compile Include="Assets\DestPrimitives\Source\Generators\GeoSphereGenerator.cs" />
      <Compile Include="Assets\DestPrimitives\Source\Generators\MeshGenerator.cs" />
      <Compile Include="Assets\DestPrimitives\Source\Generators\TeapotGenerator.cs" />
@@ -76,6 +76,7 @@
      <Compile Include="Assets\DestPrimitives\Source\Primitives\WireBox.cs" />
      <Compile Include="Assets\InstantiateGraph.cs" />
      <Compile Include="Assets\MiniMap.cs" />
+     <Compile Include="Assets\NormalButtonToggle.cs" />
      <Compile Include="Assets\Oculus\AudioManager\Scenes\Scripts\TestScript.cs" />
      <Compile Include="Assets\Oculus\AudioManager\Scripts\Audio\AmbienceEmitter.cs" />
      <Compile Include="Assets\Oculus\AudioManager\Scripts\Audio\AudioManager.cs" />
